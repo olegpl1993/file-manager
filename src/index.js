@@ -1,7 +1,7 @@
 import getUsername from "./getUsername.js";
 const app = () => {
   const username = getUsername();
-  console.log(username);
+  console.log(`Welcome to the File Manager, ${username}!`);
 };
 
 app();
