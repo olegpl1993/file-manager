@@ -1,4 +1,4 @@
-import getUsername from "./getUsername.js";
+import getUsername from "./helpers/getUsername.js";
 const app = () => {
   const username = getUsername();   // получаем имя пользователя
   console.log(`Welcome to the File Manager, ${username}!`); // выводим приветствие
