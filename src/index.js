@@ -1,9 +1,15 @@
 import getUsername from "./getUsername.js";
 const app = () => {
-  const username = getUsername();
-  console.log(`Welcome to the File Manager, ${username}!`);
+  const username = getUsername();   // получаем имя пользователя
+  console.log(`Welcome to the File Manager, ${username}!`); // выводим приветствие
+
+  // cоздаем интерфейс для чтения ввода из консоли
+  // const rl = readline.createInterface({
+  //   input: process.stdin,
+  //   output: process.stdout,
+  // });
 };
 
 app();
 
-// npm run start -- --username=your_username
+// npm run start -- --hello=world --username=your_username --password=your_password
