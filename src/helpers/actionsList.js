@@ -1,12 +1,12 @@
 // набор действий
 export const actionsList = {
-  up: () => {
-    console.log("input up");
+  '.exit': () => {
+    process.exit(0);
   },
-  cd: () => {
+  'cd': () => {
     console.log("input cd");
   },
-  ls: () => {
+  'ls': () => {
     console.log("input ls");
   },
 };

@@ -18,6 +18,11 @@ const app = () => {
   rl.on("line", (input) => {
     inputActions(input);
   });
+
+  // обработчик завершения работы
+  process.on('exit', () => {
+    console.log(`Thank you for using File Manager, ${username}, goodbye!`);
+  });
 };
 
 app();
