@@ -7,8 +7,12 @@ export const inputActions = (input) => {
     console.log("test action:", actionName);
     console.log("test args:", joinedArgs);
     const action = actionsList[actionName]; // получаем действие
-    action(); // вызываем действие
-  } catch (error) {
+  } catch {
     console.log("Invalid input"); // в случае не корректного ввода выводим сообщение
+  }
+  try {
+    action(); // вызываем действие
+  } catch {
+    console.log("Operation failed"); // в случае ошибки выполнеения выводим сообщение
   }
 };
