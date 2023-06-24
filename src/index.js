@@ -8,6 +8,9 @@ import os from "os";
 const username = getUsername(); // получаем имя пользователя
 const homeDirectory = os.homedir(); // получаем директорию пользователя
 export let currentDirectory = homeDirectory; // текущая директория
+export const setCurrentDirectory = (newDirectory) => {
+  currentDirectory = newDirectory;
+};
 
 const app = () => {
   console.log(`Welcome to the File Manager, ${username}!`);

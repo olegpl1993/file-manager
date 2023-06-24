@@ -4,10 +4,8 @@ export const inputActions = (input) => {
   try {
     const [actionName, ...args] = input.trim().split(" "); // получаем имя действия и списка аргументов
     const joinedArgs = args.join(" "); // объединяем аргументы
-    console.log("test action:", actionName);
-    console.log("test args:", joinedArgs);
     const action = actionsList[actionName]; // получаем действие
-    action(); // вызываем действие
+    action(joinedArgs); // вызываем действие
   } catch {
     console.log("Invalid input"); // в случае не корректного ввода выводим сообщение
   }
