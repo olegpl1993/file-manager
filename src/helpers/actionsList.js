@@ -12,11 +12,11 @@ export const actionsList = {
   },
   cd: async (joinedArgs) => {
     try {
-      const stats = await fs.promises.stat(currentDirectory);
+      const selectedDirectory = path.join(currentDirectory, joinedArgs);
+      const stats = await fs.promises.stat(selectedDirectory);
       if (!stats.isDirectory()) {
         console.log(`Operation failed`);
       } else {
-        const selectedDirectory = path.join(currentDirectory, joinedArgs);
         setCurrentDirectory(selectedDirectory);
       }
     } catch {
