@@ -23,8 +23,8 @@ const app = () => {
   });
 
   // обработчик ввода
-  rl.on("line", (input) => {
-    inputActions(input);
+  rl.on("line", async (input) => {
+    await inputActions(input);
     console.log(`You are currently in ${currentDirectory}`);
   });
 

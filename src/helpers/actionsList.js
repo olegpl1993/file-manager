@@ -10,15 +10,18 @@ export const actionsList = {
     const upDirectory = path.join(currentDirectory, "..");
     setCurrentDirectory(upDirectory);
   },
-  cd: (joinedArgs) => {
-    fs.stat(currentDirectory, (err, stats) => {
-      if (err || stats.isFile()) {
+  cd: async (joinedArgs) => {
+    try {
+      const stats = await fs.promises.stat(currentDirectory);
+      if (!stats.isDirectory()) {
         console.log(`Operation failed`);
       } else {
         const selectedDirectory = path.join(currentDirectory, joinedArgs);
         setCurrentDirectory(selectedDirectory);
       }
-    });
+    } catch {
+      console.log(`Operation failed`);
+    }
   },
   ls: async () => {
     const files = await fs.promises.readdir(currentDirectory, {
