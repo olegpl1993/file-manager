@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import os from "os";
+import crypto from "crypto";
 import { currentDirectory, setCurrentDirectory } from "../index.js";
 
 export const actionsList = {
@@ -134,6 +135,16 @@ export const actionsList = {
         const arch = process.arch;
         console.log(arch);
       }
+    } catch {
+      console.log(`Operation failed`);
+    }
+  },
+  hash: async (joinedArgs) => {
+    try {
+      const pathToFile = path.join(currentDirectory, joinedArgs);
+      const data = await fs.promises.readFile(pathToFile, "utf8");
+      const hash = crypto.createHash("sha256").update(data).digest("hex");
+      console.log(hash);
     } catch {
       console.log(`Operation failed`);
     }
