@@ -44,9 +44,9 @@ export const actionsList = {
       // Сортировка по типу (в алфавитном порядке) и по имени (в алфавитном порядке)
       fileStats.sort((a, b) => {
         if (a.Type === b.Type) {
-          return a.Name.localeCompare(b.Name); // Сортировка по имени
+          return a.Name.localeCompare(b.Name);
         } else {
-          return a.Type.localeCompare(b.Type); // Сортировка по типу
+          return a.Type.localeCompare(b.Type);
         }
       });
       console.table(fileStats);
@@ -156,12 +156,24 @@ export const actionsList = {
       const pathToFile = path.join(currentDirectory, fileName);
       const pathToNewFile = path.join(pathToDirectory, fileName + ".br");
 
-      // Создаем Readable Stream из исходного файла
       const inputStream = fs.createReadStream(pathToFile);
-      // Создаем Writeable Stream для записи сжатых данных в новый файл
       const outputStream = fs.createWriteStream(pathToNewFile);
-      // Создаем Transform Stream с алгоритмом Brotli для сжатия данных
       const brotliStream = zlib.createBrotliCompress();
+
+      inputStream.pipe(brotliStream).pipe(outputStream);
+    } catch {
+      console.log(`Operation failed`);
+    }
+  },
+  decompress: async (joinedArgs) => {
+    try {
+      const [fileName, pathToDirectory] = joinedArgs.split(" ", 2);
+      const pathToFile = path.join(currentDirectory, fileName);
+      const pathToNewFile = path.join(pathToDirectory, path.basename(fileName, path.extname(fileName)));
+
+      const inputStream = fs.createReadStream(pathToFile);
+      const outputStream = fs.createWriteStream(pathToNewFile);
+      const brotliStream = zlib.createBrotliDecompress();
 
       inputStream.pipe(brotliStream).pipe(outputStream);
     } catch {
