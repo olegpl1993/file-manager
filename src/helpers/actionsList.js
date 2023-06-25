@@ -44,17 +44,12 @@ export const actionsList = {
     console.table(fileStats);
   },
   cat: async (joinedArgs) => {
-    const pathToFile = path.join(currentDirectory, joinedArgs); // путь к целевому файлу
-    // проверка существования файла
-    fs.access(pathToFile, fs.constants.F_OK, (error) => {
-      if (error) {
-        console.log(`Operation failed`);
-      } else {
-        // чтение файла и вывод содержимого в консоль
-        fs.readFile(pathToFile, "utf8", (err, data) => {
-          console.log(data);
-        });
-      }
-    });
+    const pathToFile = path.join(currentDirectory, joinedArgs); // путь к файлу
+    try {
+      const data = await fs.promises.readFile(pathToFile, "utf8"); // читаем файл
+      console.log(data);
+    } catch (error) {
+      console.log(`Operation failed`);
+    }
   },
 };
