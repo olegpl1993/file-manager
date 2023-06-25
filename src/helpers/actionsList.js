@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 import os from "os";
 import crypto from "crypto";
+import zlib from "zlib";
 import { currentDirectory, setCurrentDirectory } from "../index.js";
 
 export const actionsList = {
@@ -145,6 +146,24 @@ export const actionsList = {
       const data = await fs.promises.readFile(pathToFile, "utf8");
       const hash = crypto.createHash("sha256").update(data).digest("hex");
       console.log(hash);
+    } catch {
+      console.log(`Operation failed`);
+    }
+  },
+  compress: async (joinedArgs) => {
+    try {
+      const [fileName, pathToDirectory] = joinedArgs.split(" ", 2);
+      const pathToFile = path.join(currentDirectory, fileName);
+      const pathToNewFile = path.join(pathToDirectory, fileName + ".br");
+
+      // Создаем Readable Stream из исходного файла
+      const inputStream = fs.createReadStream(pathToFile);
+      // Создаем Writeable Stream для записи сжатых данных в новый файл
+      const outputStream = fs.createWriteStream(pathToNewFile);
+      // Создаем Transform Stream с алгоритмом Brotli для сжатия данных
+      const brotliStream = zlib.createBrotliCompress();
+
+      inputStream.pipe(brotliStream).pipe(outputStream);
     } catch {
       console.log(`Operation failed`);
     }
