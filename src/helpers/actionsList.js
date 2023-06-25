@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import os from "os";
 import { currentDirectory, setCurrentDirectory } from "../index.js";
 
 export const actionsList = {
@@ -103,6 +104,24 @@ export const actionsList = {
     try {
       const pathToFile = path.join(currentDirectory, joinedArgs);
       await fs.promises.unlink(pathToFile);
+    } catch {
+      console.log(`Operation failed`);
+    }
+  },
+  os: async (joinedArgs) => {
+    try {
+      const args = joinedArgs.split(" ");
+      if (args.includes("--EOL")) {
+        const eol = os.EOL;
+        console.log("eol: ", eol);
+      }
+      if (args.includes("--cpus")) {
+        const cpus = os.cpus();
+        cpus.forEach((cpu, index) => {
+          const { model, speed } = cpu;
+          console.log(`CPU ${index + 1}: ${model} - ${speed / 1000} GHz`);
+        });
+      }
     } catch {
       console.log(`Operation failed`);
     }
