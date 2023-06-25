@@ -44,10 +44,18 @@ export const actionsList = {
     console.table(fileStats);
   },
   cat: async (joinedArgs) => {
-    const pathToFile = path.join(currentDirectory, joinedArgs); // путь к файлу
+    const pathToFile = path.join(currentDirectory, joinedArgs);
     try {
-      const data = await fs.promises.readFile(pathToFile, "utf8"); // читаем файл
+      const data = await fs.promises.readFile(pathToFile, "utf8");
       console.log(data);
+    } catch (error) {
+      console.log(`Operation failed`);
+    }
+  },
+  add: async (joinedArgs) => {
+    const pathToFile = path.join(currentDirectory, joinedArgs);
+    try {
+      await fs.promises.writeFile(pathToFile, "", "utf8");
     } catch (error) {
       console.log(`Operation failed`);
     }
