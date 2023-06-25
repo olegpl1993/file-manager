@@ -43,4 +43,18 @@ export const actionsList = {
     });
     console.table(fileStats);
   },
+  cat: async (joinedArgs) => {
+    const pathToFile = path.join(currentDirectory, joinedArgs); // путь к целевому файлу
+    // проверка существования файла
+    fs.access(pathToFile, fs.constants.F_OK, (error) => {
+      if (error) {
+        console.log(`Operation failed`);
+      } else {
+        // чтение файла и вывод содержимого в консоль
+        fs.readFile(pathToFile, "utf8", (err, data) => {
+          console.log(data);
+        });
+      }
+    });
+  },
 };
