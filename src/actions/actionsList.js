@@ -1,7 +1,3 @@
-import path from "path";
-import fs from "fs";
-import zlib from "zlib";
-import { currentDirectory } from "../index.js";
 import { up } from "./up.js";
 import { cd } from "./cd.js";
 import { ls } from "./ls.js";
