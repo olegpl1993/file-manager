@@ -1,4 +1,4 @@
-import { actionsList } from "./actionsList.js";
+import { actionsList } from "../actions/actionsList.js";
 
 export const inputActions = async (input) => {
   try {
