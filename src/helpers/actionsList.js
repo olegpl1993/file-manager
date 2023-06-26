@@ -100,8 +100,12 @@ export const actionsList = {
       const [fileName, pathToDirectory] = joinedArgs.split(" ", 2);
       const pathToFile = path.join(currentDirectory, fileName);
       const pathToNewFile = path.join(pathToDirectory, fileName);
-      await fs.promises.copyFile(pathToFile, pathToNewFile);
-      await fs.promises.unlink(pathToFile);
+      const readStream = fs.createReadStream(pathToFile);
+      const writeStream = fs.createWriteStream(pathToNewFile);
+      readStream.pipe(writeStream);
+      readStream.on("end", () => {
+        fs.promises.unlink(pathToFile);
+      });
     } catch {
       console.log(`Operation failed`);
     }
