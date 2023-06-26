@@ -57,8 +57,10 @@ export const actionsList = {
   cat: async (joinedArgs) => {
     try {
       const pathToFile = path.join(currentDirectory, joinedArgs);
-      const data = await fs.promises.readFile(pathToFile, "utf8");
-      console.log(data);
+      const readStream = fs.createReadStream(pathToFile, "utf8");
+      for await (const chunk of readStream) {
+        console.log(chunk);
+      }
     } catch {
       console.log(`Operation failed`);
     }
@@ -169,7 +171,10 @@ export const actionsList = {
     try {
       const [fileName, pathToDirectory] = joinedArgs.split(" ", 2);
       const pathToFile = path.join(currentDirectory, fileName);
-      const pathToNewFile = path.join(pathToDirectory, path.basename(fileName, path.extname(fileName)));
+      const pathToNewFile = path.join(
+        pathToDirectory,
+        path.basename(fileName, path.extname(fileName))
+      );
 
       const inputStream = fs.createReadStream(pathToFile);
       const outputStream = fs.createWriteStream(pathToNewFile);
